@@ -4,6 +4,8 @@
 #include "Plataforma.h"
 #include <vector>
 
+#include "Hormiga.h"
+
 int main() {
     sf::RenderWindow ventana(sf::VideoMode(800, 600), "Juego de plataformas");
 
@@ -27,6 +29,9 @@ int main() {
     // Crear personaje
     Ray ray;
     ray.setPosicion(100.f, 500.f); // Posición inicial
+
+    Hormiga hormiga;
+    ray.setPosicion(100.f, 500.f);
 
     // Crear plataformas
     std::vector<Plataforma> plataformas;
@@ -88,6 +93,7 @@ int main() {
 
         // Dibujar el personaje
         ray.dibujar(ventana);
+        hormiga.dibujar(ventana);
 
         ventana.display();
     }
