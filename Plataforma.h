@@ -1,5 +1,5 @@
 //
-// Created by Sebastian on 6/05/2025.
+// Created by Sebastian on 12/05/2025.
 //
 
 #ifndef PLATAFORMA_H
@@ -14,20 +14,26 @@ private:
     bool tieneTextura;
 
 public:
-    // Constructor para plataforma con textura
+    // Constructor por defecto
+    Plataforma();
+
+    // Constructor con parámetros
+    Plataforma(float x, float y, float ancho, float alto);
+
+    // Constructor con textura
     Plataforma(float x, float y, float ancho, float alto, const std::string& rutaTextura);
 
-    // Constructor para plataforma sin textura (solo color)
-    Plataforma(float x, float y, float ancho, float alto, sf::Color color);
+    // Dibujar la plataforma
+    void dibujar(sf::RenderWindow& ventana);
 
-    // Obtener los límites de la plataforma (para colisiones)
+    // Obtener los límites (para colisiones)
     sf::FloatRect getLimites() const;
 
-    // Dibujar la plataforma en la ventana - ahora marcado como const
-    void dibujar(sf::RenderWindow& ventana) const;
+    // Establecer posición
+    void setPosicion(float x, float y);
 
-    // Comprobar si un punto está por encima de la plataforma
-    bool estaPorEncima(float x, float y) const;
+    // Cambiar color (útil para plataformas sin textura)
+    void setColor(const sf::Color& color);
 };
 
 #endif

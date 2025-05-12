@@ -1,52 +1,53 @@
 //
-// Created by Sebastian on 6/05/2025.
+// Created by Sebastian on 12/05/2025.
 //
 
 #include "Plataforma.h"
 #include <iostream>
 
-// Constructor con textura
-Plataforma::Plataforma(float x, float y, float ancho, float alto, const std::string& rutaTextura) {
+Plataforma::Plataforma() : tieneTextura(false) {
+    forma.setSize(sf::Vector2f(100.f, 10.f));
+    forma.setFillColor(sf::Color(139, 69, 19)); // Color marrón por defecto
+    forma.setPosition(0.f, 0.f);
+}
+
+Plataforma::Plataforma(float x, float y, float ancho, float alto) : tieneTextura(false) {
+    forma.setSize(sf::Vector2f(ancho, alto));
+    forma.setFillColor(sf::Color(139, 69, 19)); // Color marrón por defecto
+    forma.setPosition(x, y);
+}
+
+Plataforma::Plataforma(float x, float y, float ancho, float alto, const std::string& rutaTextura) : tieneTextura(true) {
     forma.setSize(sf::Vector2f(ancho, alto));
     forma.setPosition(x, y);
 
-    tieneTextura = true;
+    // Cargar textura
     if (!textura.loadFromFile(rutaTextura)) {
-        std::cerr << "Error al cargar la textura de la plataforma: " << rutaTextura << std::endl;
+        std::cerr << "Error cargando textura de plataforma: " << rutaTextura << std::endl;
         tieneTextura = false;
-        forma.setFillColor(sf::Color(150, 75, 0)); // Color marrón por defecto
+        forma.setFillColor(sf::Color(139, 69, 19)); // Color por defecto si falla la carga
     } else {
-        textura.setRepeated(true); // Permite que la textura se repita si la plataforma es más grande
         forma.setTexture(&textura);
+        // Opcional: repetir la textura si la plataforma es más grande que la textura
+        textura.setRepeated(true);
+
         forma.setTextureRect(sf::IntRect(0, 0, ancho, alto));
     }
 }
 
-// Constructor con color
-Plataforma::Plataforma(float x, float y, float ancho, float alto, sf::Color color) {
-    forma.setSize(sf::Vector2f(ancho, alto));
-    forma.setPosition(x, y);
-    forma.setFillColor(color);
-    tieneTextura = false;
+void Plataforma::dibujar(sf::RenderWindow& ventana) {
+    ventana.draw(forma);
 }
 
 sf::FloatRect Plataforma::getLimites() const {
     return forma.getGlobalBounds();
 }
 
-// Ahora también marcado como const en la implementación
-void Plataforma::dibujar(sf::RenderWindow& ventana) const {
-    ventana.draw(forma);
+void Plataforma::setPosicion(float x, float y) {
+    forma.setPosition(x, y);
 }
 
-bool Plataforma::estaPorEncima(float x, float y) const {
-    sf::FloatRect limites = getLimites();
-
-    // Comprobar si el punto x,y está dentro de los límites horizontales de la plataforma
-    bool dentroHorizontal = x >= limites.left && x <= limites.left + limites.width;
-
-    // Comprobar si el punto está justo por encima de la plataforma (con un pequeño margen)
-    bool justoPorEncima = y <= limites.top && y + 5 >= limites.top;
-
-    return dentroHorizontal && justoPorEncima;
+void Plataforma::setColor(const sf::Color& color) {
+    // Solo cambiar el color si no tiene textura o si queremos sobre-colorear la textura
+    forma.setFillColor(color);
 }

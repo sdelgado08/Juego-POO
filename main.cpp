@@ -3,7 +3,6 @@
 #include "Ray.h"
 #include "Plataforma.h"
 #include <vector>
-
 #include "Hormiga.h"
 
 int main() {
@@ -20,7 +19,6 @@ int main() {
     sf::Sprite spriteFondo;
     spriteFondo.setTexture(texturaFondo);
 
-    // Opcional: escalar el fondo para que se ajuste exactamente a la ventana
     spriteFondo.setScale(
         800.0f / texturaFondo.getSize().x,
         600.0f / texturaFondo.getSize().y
@@ -30,23 +28,30 @@ int main() {
     Ray ray;
     ray.setPosicion(100.f, 500.f); // Posición inicial
 
+    // Crear enemigo
     Hormiga hormiga;
-    ray.setPosicion(100.f, 500.f);
+    hormiga.setPosicion(1000.f, 1300.f); // Posición inicial de la hormiga
 
     // Crear plataformas
     std::vector<Plataforma> plataformas;
 
-    // Textura para las plataformas
-    std::string texturaPlataforma = "plataforma.png";
+    // Dimensiones de plataformas
+    const float ANCHO_PLATAFORMA = 150.f;
+    const float ALTO_PLATAFORMA = 20.f;
+    const sf::Color COLOR_PLATAFORMA = sf::Color(128, 128, 128); // Color gris
 
-    // Suelo principal - usando color en lugar de textura
-    plataformas.push_back(Plataforma(1200, 1000, 500, 112, sf::Color(100, 50, 0))); // Color marrón para el suelo
+    // Plataformas en el aire
+    plataformas.push_back(Plataforma(500, 900, ANCHO_PLATAFORMA, ALTO_PLATAFORMA));
+    plataformas.back().setColor(COLOR_PLATAFORMA);
 
-    // Plataformas adicionales con textura
-    plataformas.push_back(Plataforma(1200, 1000, 500, 112, texturaPlataforma));
-    plataformas.push_back(Plataforma(350, 350, 500, 112, texturaPlataforma));
-    plataformas.push_back(Plataforma(100, 250, 500, 112, texturaPlataforma));
-    plataformas.push_back(Plataforma(500, 200, 500, 112, texturaPlataforma));
+    plataformas.push_back(Plataforma(400, 700, ANCHO_PLATAFORMA, ALTO_PLATAFORMA));
+    plataformas.back().setColor(COLOR_PLATAFORMA);
+
+    plataformas.push_back(Plataforma(1500, 1200, ANCHO_PLATAFORMA, ALTO_PLATAFORMA));
+    plataformas.back().setColor(COLOR_PLATAFORMA);
+
+    plataformas.push_back(Plataforma(2000, 1000, ANCHO_PLATAFORMA, ALTO_PLATAFORMA));
+    plataformas.back().setColor(COLOR_PLATAFORMA);
 
     while (ventana.isOpen()) {
         sf::Event evento;
@@ -78,7 +83,7 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
             ray.saltar();
 
-        // Actualiza animación y física con plataformas
+        // Actualizar el personaje con las plataformas
         ray.actualizarConPlataformas(plataformas);
 
         ventana.clear();
@@ -87,11 +92,11 @@ int main() {
         ventana.draw(spriteFondo);
 
         // Dibujar todas las plataformas
-        for (const auto& plataforma : plataformas) {
+        for (auto& plataforma : plataformas) {
             plataforma.dibujar(ventana);
         }
 
-        // Dibujar el personaje
+        // Dibujar el personaje y enemigos
         ray.dibujar(ventana);
         hormiga.dibujar(ventana);
 

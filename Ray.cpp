@@ -143,7 +143,6 @@ void Ray::actualizar() {
 
 // Nuevo método para actualizar considerando plataformas
 void Ray::actualizarConPlataformas(const std::vector<Plataforma>& plataformas) {
-    // Animación de movimiento horizontal (solo si no está saltando)
     if (enMovimiento && !saltando) {
         if (relojAnimacion.getElapsedTime().asSeconds() >= 0.15f) {
             frameActual = (frameActual + 1) % 3;
@@ -263,24 +262,20 @@ void Ray::actualizarConPlataformas(const std::vector<Plataforma>& plataformas) {
 
 void Ray::dibujar(sf::RenderWindow& ventana) {
     ventana.draw(sprite);
-
-    // Opcional: dibujar la hitbox para depuración
-    /*
     sf::FloatRect hitbox = getHitbox();
     sf::RectangleShape rectHitbox;
     rectHitbox.setSize(sf::Vector2f(hitbox.width, hitbox.height));
     rectHitbox.setPosition(hitbox.left, hitbox.top);
     rectHitbox.setFillColor(sf::Color(255, 0, 0, 100));
     ventana.draw(rectHitbox);
-    */
 }
 
 sf::FloatRect Ray::getHitbox() const {
     sf::Vector2f pos = sprite.getPosition();
     // Centrar la hitbox en el sprite
     return sf::FloatRect(
-        pos.x - anchoHitbox/2,
-        pos.y - altoHitbox,
+        pos.x - anchoHitbox/20,
+        pos.y - altoHitbox/12,
         anchoHitbox,
         altoHitbox
     );
