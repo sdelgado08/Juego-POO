@@ -7,7 +7,7 @@ using namespace std;
 
 // Constructor
 Ray::Ray(vector<vector<char>>& m, int startF, int startC)
-    : mapa(m), fila(startF), columna(startC), vida(10) {
+    : mapa(m), fila(startF), columna(startC), vida(10), escenarioActual(0) {
     mapa[fila][columna] = 'R';
 }
 
@@ -27,8 +27,9 @@ void Ray::mostrarMapa() {
         cout << '\n';
     }
 
-    cout << "\nVIDA: " << vida << "\n";
+    cout << "\nVIDA: " << vida << " | ESCENARIO: " << escenarioActual + 1 << "\n";
     cout << "Controles: WASD para moverse, Q para salir\n";
+    cout << "S = Semilla (+1 vida), P = Puerta (siguiente escenario)\n";
 }
 
 // Verificar si puede moverse

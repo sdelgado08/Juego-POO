@@ -8,6 +8,7 @@ class Ray {
 public:
     int fila, columna;
     int vida;
+    int escenarioActual;
     vector<vector<char>>& mapa;
 
     Ray(vector<vector<char>>& m, int startF, int startC);
