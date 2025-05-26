@@ -20,7 +20,7 @@ void mostrarMapa(const vector<vector<char>>& mapa, const Ray& ray) {
         cout << '\n';
     }
     cout << "Vida de Ray: " << ray.vida << " | Escenario: " << ray.escenarioActual + 1 << "\n";
-    cout << "Controles: W = Arriba | A = Izquierda | S = Abajo | D = derecha" << "\n";
+    cout << "Controles: W = Arriba | A = Izquierda | S = Abajo | D = Derecha | Q = Salir" << "\n";
     cout << "\n";
 }
 
@@ -31,12 +31,12 @@ vector<vector<char>> crearMapa(int escenario) {
         // Escenario 1
         disenoMapa = {
             "##################################################",
-            "#            P    #####                 ##       #",
+            "#            P    #####  S              ##       #",
             "#   ####   ############    ####   ##    ######   #",
             "#   ####   ######          ####   ##    ######   #",
             "########   ######   ###########   ##    ######   #",
-            "#                   ################             #",
-            "##   ###################   ##             ########",
+            "#                   ################         S   #",
+            "#   ###################   ##             #########",
             "#    ###################   ##   #######   ########",
             "#  S ##                    ##   #######   ##     #",
             "#    ##     #################   ##   ##   ##  S  #",
@@ -56,9 +56,9 @@ vector<vector<char>> crearMapa(int escenario) {
             "########################################   S    ##",
             "######                                           #",
             "#          #######################################",
-            "#                                    #######     #",
+            "#                                    #############",
             "########################         #################",
-            "#                               # #  ###    #  ###",
+            "#                               ##################",
             "#########          ###############################",
             "#########                                        #",
             "###########################################  S   #",
@@ -76,20 +76,20 @@ vector<vector<char>> crearMapa(int escenario) {
         // Escenario 3
         disenoMapa = {
             "##################################################",
-            "#                                               P#",
-            "#  ############################################  #",
-            "#  #  S  #     #  S    #    S  #     #  S  #  #",
-            "#  #     #     #       #       #     #     #  #",
-            "#  #######     #########     #######     ###  #",
-            "#         #####         #####         ####    #",
-            "#  S      #   #    S    #   #      S  #  #    #",
-            "#         #   #         #   #         #  #    #",
-            "#  ########   ###########   #########    #    #",
-            "#  #      #               #         #    #    #",
-            "#  #   S  #     #####     #    S    #  ###    #",
-            "#  #      #     #   #     #         #         #",
-            "#  ########     #   #     ###########  ########",
-            "#         S     #   #         S                #",
+            "##################################################",
+            "##################################################",
+            "###################          # ###################",
+            "##################   #          ##################",
+            "#################      #      #  #################",
+            "################                  ################",
+            "###############       #        #   ###############",
+            "##############                      ##############",
+            "#############     #           #      #############",
+            "############              #           ############",
+            "###########                            ###########",
+            "##########                              ##########",
+            "#########                                #########",
+            "########                                  ########",
             "##################################################",
         };
     }
@@ -105,26 +105,26 @@ vector<vector<char>> crearMapa(int escenario) {
     return mapa;
 }
 
-vector<Villano> crearVillanos(vector<vector<char>>& mapa, int escenario) {
-    vector<Villano> villanos;
+vector<HormigaInfectada> crearVillanos(vector<vector<char>>& mapa, int escenario) {
+    vector<HormigaInfectada> villanos;
 
     if (escenario == 0) {
         // Villanos para escenario 1
-        villanos.push_back(Villano(mapa, 5, 11));
-        villanos.push_back(Villano(mapa, 1, 30));
+        villanos.push_back(HormigaInfectada(mapa, 5, 11));
+        villanos.push_back(HormigaInfectada(mapa, 1, 30));
     }
     else if (escenario == 1) {
         // Villanos para escenario 2
-        villanos.push_back(Villano(mapa, 4, 8));
-        villanos.push_back(Villano(mapa, 10, 15));
-        villanos.push_back(Villano(mapa, 12, 35));
+        villanos.push_back(HormigaInfectada(mapa, 4, 8));
+        villanos.push_back(HormigaInfectada(mapa, 10, 15));
+        villanos.push_back(HormigaInfectada(mapa, 12, 35));
     }
     else if (escenario == 2) {
         // Villanos para escenario 3
-        villanos.push_back(Villano(mapa, 3, 10));
-        villanos.push_back(Villano(mapa, 7, 20));
-        villanos.push_back(Villano(mapa, 11, 30));
-        villanos.push_back(Villano(mapa, 14, 40));
+        villanos.push_back(HormigaInfectada(mapa, 3, 10));
+        villanos.push_back(HormigaInfectada(mapa, 7, 20));
+        villanos.push_back(HormigaInfectada(mapa, 11, 30));
+        villanos.push_back(HormigaInfectada(mapa, 14, 40));
     }
 
     return villanos;
@@ -152,7 +152,7 @@ int main() {
     ray.escenarioActual = escenarioActual;
 
     // Crear villanos para el escenario actual
-    vector<Villano> villanos = crearVillanos(mapa, escenarioActual);
+    vector<HormigaInfectada> villanos = crearVillanos(mapa, escenarioActual);
 
     mostrarMapa(mapa, ray);
 
@@ -201,7 +201,7 @@ int main() {
                 // Crear nuevos villanos para el nuevo escenario
                 villanos = crearVillanos(mapa, escenarioActual);
 
-                cout << "\n🚪 Cambiando al escenario " << escenarioActual + 1 << "...\n";
+                cout << "\n Cambiando al escenario " << escenarioActual + 1 << "...\n";
                 Sleep(1500); // Pausa para mostrar el mensaje
             }
 
@@ -231,7 +231,7 @@ int main() {
             mostrarMapa(mapa, ray);
 
             if (ray.vida <= 0) {
-                cout << "\n💀 ¡Ray ha perdido toda su vida! Fin del juego.\n";
+                cout << "\n ¡Ray ha perdido toda su vida! Fin del juego.\n";
                 cout << "Presiona cualquier tecla para salir...";
                 _getch();
                 break;

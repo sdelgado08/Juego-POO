@@ -11,14 +11,14 @@ Ray::Ray(vector<vector<char>>& m, int startF, int startC)
     mapa[fila][columna] = 'R';
 }
 
-// Mostrar mapa usando cout (compatible con Windows)
+// Mostrar mapa usando cout
 void Ray::mostrarMapa() {
     system("cls");  // Limpia consola en Windows
 
     for (int i = 0; i < mapa.size(); ++i) {
         for (int j = 0; j < mapa[i].size(); ++j) {
             if (i == fila && j == columna) {
-                cout << 'R';  // Ray
+                cout << 'R';
             }
             else {
                 cout << mapa[i][j];
